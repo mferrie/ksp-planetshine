@@ -67,11 +67,10 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
+    <Content Include="Distribution\GameData\PlanetShine\ChangeLog.txt" />
     <Content Include="Distribution\GameData\PlanetShine\Icons\ps_disabled.png" />
     <Content Include="Distribution\GameData\PlanetShine\Icons\ps_enabled.png" />
     <Content Include="Distribution\GameData\PlanetShine\Icons\ps_toolbar.png" />
-    <Content Include="Distribution\GameData\PlanetShine\Plugins\MiniAVC.dll" />
-    <Content Include="Distribution\GameData\PlanetShine\Plugins\MiniAVC.xml" />
     <Content Include="Distribution\GameData\PlanetShine\Plugins\PlanetShine.dll" />
     <Content Include="LocalDev\7za_dir.txt" />
     <Content Include="LocalDev\dist_dir.txt" />
@@ -83,7 +82,6 @@
     <None Include="Distribution\GameData\PlanetShine\Config\CelestialBodies.cfg" />
     <None Include="Distribution\GameData\PlanetShine\Config\Settings.cfg" />
     <None Include="Distribution\GameData\PlanetShine\LICENSE" />
-    <None Include="Distribution\GameData\PlanetShine\Plugins\PlanetShine.log" />
     <None Include="Distribution\GameData\PlanetShine\Plugins\PlanetShine.version" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
@@ -99,10 +97,6 @@ set /p PDB2MDB_EXE_DIR=&lt;"$(ProjectDir)LocalDev\pdb2mdb_exe.txt"
 set /p ZA_DIR=&lt;"$(ProjectDir)LocalDev\7za_dir.txt"
 set /p DIST_DIR=&lt;"$(ProjectDir)LocalDev\dist_dir.txt"
 
-echo Copying $(TargetPath) to game test env...
-xcopy /E /Y "$(TargetPath)" "%25KSP_DIR%25\GameData\$(Targetname)\Plugins\"
-copy /Y "$(TargetDir)$(Targetname).pdb" "%25KSP_DIR%25\GameData\$(Targetname)\Plugins\"
-
 echo distributing $(Targetname) files to Build folder for zip build...
 xcopy /E /Y "$(TargetPath)" "%25DIST_DIR%25\Distribution\GameData\$(Targetname)\Plugins\"
 xcopy /E /Y "D:\KSP\Mods\PJS\Git\Source\PlanetShine\Config\*.*" "%25DIST_DIR%25\Distribution\GameData\$(Targetname)\Config\"
@@ -114,6 +108,8 @@ echo building $(Targetname).dll.mdb file...
 cd "$(TargetDir)"
 call "%25MONO_EXE_DIR%25\cli.bat"  "%25PDB2MDB_EXE_DIR%25\pdb2mdb.exe" $(Targetname).dll
 
+echo Copying $(TargetPath) to game test env...
+xcopy /E /Y "%25DIST_DIR%25\Distribution\GameData\*.*" "%25KSP_DIR%25\GameData\"
 copy /Y "$(TargetDir)$(Targetname).dll.mdb" "%25KSP_DIR%25\GameData\$(Targetname)\Plugins\"
 
 echo packaging files...
