@@ -1,5 +1,8 @@
 ﻿PlanetShine Change Log
 ---------------------------------------------------------
+v0.2.6.2 Mar 28, 2018
+- Added PluginData folder for settings and log storage.  This prevents MOdule Manager from recompiling cached data.
+
 v0.2.6.1 Mar 28, 2018
 - Corrected Version number on Main toolbar window.  Updated to automatically display assembly version.
 - Added change log to project and distribution files.

@@ -33,7 +33,9 @@ namespace PlanetShine
         static Logger()
         {
             assemblyName = Assembly.GetExecutingAssembly().GetName();
-            fileName = Path.ChangeExtension(Assembly.GetExecutingAssembly().Location, "log");
+            
+            fileName = Config.SettingsPath + "/" + assemblyName + ".log";
+
             File.Delete(fileName);
 
             lock (messages)
