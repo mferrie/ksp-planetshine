@@ -103,31 +103,30 @@ namespace PlanetShine
     public void Start()
     {
       ambientLight = FindObjectOfType(typeof(DynamicAmbientLight)) as DynamicAmbientLight;
-
       vacuumColor = new Color(config.vacuumLightLevel, config.vacuumLightLevel, config.vacuumLightLevel);
       if (ambientLight != null)
       {
         ambientLight.vacuumAmbientColor = vacuumColor;
       }
-
       CreateAlbedoLights();
       CreateDebugLines();
     }
 
-    private void CreateDebugLines()
-    {
-      debugLineLightDirection = Utils.CreateDebugLine(Color.white, Color.green);
-      debugLineSunDirection = Utils.CreateDebugLine(Color.white, Color.yellow);
-      debugLineBodyDirection = Utils.CreateDebugLine(Color.white, Color.red);
-      debugLineLights = new LineRenderer[Config.maxAlbedoLightsQuantity];
+    private void CreateDebugLines() {
+			//debugLineLightDirection = Utils.CreateDebugLine(Color.white, Color.green);
+			//debugLineSunDirection = Utils.CreateDebugLine(Color.white, Color.yellow);
+			//debugLineBodyDirection = Utils.CreateDebugLine(Color.white, Color.red);
+			/*
+			debugLineLights = new LineRenderer[Config.maxAlbedoLightsQuantity];
       for (var i = 0; i < Config.maxAlbedoLightsQuantity; i++)
       {
         debugLineLights[i] = Utils.CreateDebugLine(Color.white, Color.blue);
       }
+	  */
+
     }
 
-    private void CreateAlbedoLights()
-    {
+    private void CreateAlbedoLights() {
       albedoLights = new GameObject[Config.maxAlbedoLightsQuantity];
       for (var i = 0; i < Config.maxAlbedoLightsQuantity; i++)
       {
@@ -144,8 +143,7 @@ namespace PlanetShine
     }
 
     // Find current celestial body info and color in config, or use default neutral settings
-    private void UpdateCelestialBody()
-    {
+    private void UpdateCelestialBody() {
       body = FlightGlobals.ActiveVessel.mainBody;
       bodyColor = new Color(100f / 256f, 100f / 256f, 100f / 256f);
       bodyAtmosphereAmbient = 0.3f;
@@ -163,8 +161,7 @@ namespace PlanetShine
       }
     }
 
-    private void UpdateDebugLines()
-    {
+    private void UpdateDebugLines() {
       if (config.debug)
       {
         debugLineLightDirection.SetPosition(0, visibleLightPositionAverage);
@@ -185,8 +182,7 @@ namespace PlanetShine
         line.enabled = false;
 
       int i = 0;
-      foreach (GameObject albedoLight in albedoLights)
-      {
+      foreach (GameObject albedoLight in albedoLights) {
         if (albedoLightsQuantity > 1)
         {
           debugLineLights[i].enabled = config.debug;
@@ -207,8 +203,7 @@ namespace PlanetShine
     }
 
     // thise is where all the calculation and rendering of albedo lights occur
-    private void UpdateAlbedoLights()
-    {
+    private void UpdateAlbedoLights() {
 
       // reminder: "body" means celestial body, which is the currently orbiting planet/moon/sun
       // to avoid number rounding issues, we shamelessly assume the body is 0.1% smaller
@@ -281,8 +276,7 @@ namespace PlanetShine
         lightIntensity *= 1f + (areaSpreadAngleRatio * areaSpreadAngleRatio * 0.5f);
 
       int i = 0;
-      foreach (GameObject albedoLight in albedoLights)
-      {
+      foreach (GameObject albedoLight in albedoLights) {
         if (config.useVertex && !bodyIsSun)
           albedoLight.GetComponent<Light>().renderMode = LightRenderMode.ForceVertex;
         else
@@ -312,8 +306,7 @@ namespace PlanetShine
       }
     }
 
-    private void UpdateAmbientLights()
-    {
+    private void UpdateAmbientLights() {
       if (ambientLight != null)
       {
         vacuumColor.r = vacuumColor.g = vacuumColor.b = config.vacuumLightLevel;
@@ -329,8 +322,7 @@ namespace PlanetShine
       }
     }
 
-    public void FixedUpdate()
-    {
+    public void FixedUpdate() {
       if ((fixedUpdateCounter++ % config.updateFrequency) != 0)
         return;
       if (FlightGlobals.ActiveVessel == null)
@@ -344,17 +336,15 @@ namespace PlanetShine
 
       UpdateCelestialBody();
       UpdateAlbedoLights();
-      UpdateDebugLines();
+      //UpdateDebugLines();
 
-      if (config.debug)
-      {
+      if (config.debug) {
         performanceTimer.Stop();
         performanceTimerLast = performanceTimer.Elapsed.TotalMilliseconds;
       }
     }
 
-    public void LateUpdate()
-    {
+    public void LateUpdate() {
       UpdateAmbientLights();
     }
   }
