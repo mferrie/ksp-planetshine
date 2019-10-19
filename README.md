@@ -1,4 +1,4 @@
-#PlanetShine for Kerbal Space Program
+# PlanetShine for Kerbal Space Program
 
 Originally developed by Valerian and Papa_Joe, PlanetShine aims to realistically replicate the real-world effect of albedo, or "planet shine".
 
