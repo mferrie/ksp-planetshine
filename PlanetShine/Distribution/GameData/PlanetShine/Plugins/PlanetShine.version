@@ -13,21 +13,21 @@
         "MAJOR": 0,
         "MINOR": 2,
         "PATCH": 6,
-        "BUILD": 3
+        "BUILD": 4
     },
     "KSP_VERSION":
     {
         "MAJOR": 1,
-        "MINOR": 8
+        "MINOR": 12
     },
     "KSP_VERSION_MIN":
     {
         "MAJOR": 1,
-        "MINOR": 8
+        "MINOR": 12
     },
     "KSP_VERSION_MAX":
     {
         "MAJOR": 1,
-        "MINOR": 10
+        "MINOR": 13
     }
 } 
